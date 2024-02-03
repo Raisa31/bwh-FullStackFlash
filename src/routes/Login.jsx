@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Layout from '../components/Layout.jsx';
 
-const Login = ({ loggedIn, setLoggedIn, setLoggedInEmail}) => {
+const Login = ({ loggedIn, setLoggedIn, loggedInEmail, setLoggedInEmail}) => {
   const navigate = useNavigate();
   
   const [email, setEmail] = useState("");
@@ -42,7 +42,7 @@ const Login = ({ loggedIn, setLoggedIn, setLoggedInEmail}) => {
 
   return (
     <main className="Login">
-      <Layout loggedIn={loggedIn} setLoggedIn={setLoggedIn}>
+      <Layout loggedIn={loggedIn} loggedInEmail={loggedInEmail} setLoggedInEmail={setLoggedInEmail}>
       </Layout>
       
       <h2>Login</h2>
@@ -50,7 +50,7 @@ const Login = ({ loggedIn, setLoggedIn, setLoggedInEmail}) => {
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email: </label>
         <input 
-          type="text" 
+          type="email" 
           id="email" 
           name="email" 
           onChange={(e) => setEmail(e.target.value)}/>

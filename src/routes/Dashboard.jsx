@@ -1,9 +1,9 @@
 import Layout from '../components/Layout.jsx';
 
-const Dashboard = ({ loggedIn, setLoggedIn, loggedInEmail }) => {
+const Dashboard = ({ loggedInEmail, setLoggedInEmail }) => {
   return(
     <main className="Dashboard">
-      <Layout loggedIn={loggedIn} setLoggedIn={setLoggedIn}>
+      <Layout loggedInEmail={loggedInEmail} setLoggedInEmail={setLoggedInEmail}>
       </Layout>
 
       <h2>Dashboard</h2>

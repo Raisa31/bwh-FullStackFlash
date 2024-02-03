@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Layout from '../components/Layout.jsx';
 
-const Register = ({ loggedIn, setLoggedIn, setLoggedInEmail }) => {
+const Register = ({ loggedIn, setLoggedIn, loggedInEmail, setLoggedInEmail }) => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -24,7 +24,7 @@ const Register = ({ loggedIn, setLoggedIn, setLoggedInEmail }) => {
         const res =response.data
         if (response.status === 201) {
           setLoggedInEmail(email)
-          navigate("/dashboard")
+          navigate("/createprofile")
         } else {
           setMessage("Invalid credentials")
         }
@@ -46,14 +46,14 @@ const Register = ({ loggedIn, setLoggedIn, setLoggedInEmail }) => {
   
   return (
     <main className="Register">
-      <Layout loggedIn={loggedIn} setLoggedIn={setLoggedIn}>
+      <Layout loggedIn={loggedIn} setLoggedIn={setLoggedIn} loggedInEmail={loggedInEmail} setLoggedInEmail={setLoggedInEmail}>
       </Layout>
       
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email: </label>
         <input 
-          type="text" 
+          type="email" 
           id="email" 
           name="email" 
           onChange={(e) => setEmail(e.target.value)}/>

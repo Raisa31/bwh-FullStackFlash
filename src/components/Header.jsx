@@ -1,11 +1,11 @@
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 
-const Header = ({ loggedIn, setLoggedIn }) => {
+const Header = ({ loggedIn, loggedInEmail, setLoggedInEmail }) => {
 
   const navigate = useNavigate();
   
   const handleLogout = () => {
-    setLoggedIn(false);
+    setLoggedInEmail("");
     navigate("/");
   }
   
@@ -13,12 +13,16 @@ const Header = ({ loggedIn, setLoggedIn }) => {
     <div className="Header">
       <header>
         <h1>Title</h1>
-        {loggedIn ? 
+        {loggedInEmail ? 
           <nav>
             <Link to="/">
               <button>HOME</button>
             </Link>
+            <Link to="/profile">
+              <button>PROFILE</button>
+            </Link>
             <button onClick={handleLogout}>LOG OUT</button>
+            <p>Logged in as {loggedInEmail}</p>
           </nav> : 
           
           <nav>
