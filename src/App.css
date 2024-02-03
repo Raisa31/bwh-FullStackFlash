@@ -1,4 +1,16 @@
+:root {
+  background: lightgray;
+
+}
+
 main {
+  text-align: center;
+  vertical-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
 }
 
 .nav {
@@ -20,4 +32,25 @@ header {
   text-align: left;
   padding-left: 15px;
   padding-right: 10px;
+}
+
+h1 {
+  font-family: "Agbalumo";
+  color: white;
+  flex-grow: 5;
+  padding-left: 10px;
+}
+
+h3 {
+  font-size: 1.3em;
+  font-weight: 700px;
+}
+
+nav {
+  padding-top: 10px;
+  padding-right: 20px;
+}
+
+nav button {
+  font-size: 1em;
 }
