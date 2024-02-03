@@ -1,0 +1,23 @@
+main {
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background: gray;
+  display: flex;
+  text-align: left;
+  padding-left: 15px;
+  padding-right: 10px;
+}
