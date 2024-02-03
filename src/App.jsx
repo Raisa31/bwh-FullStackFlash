@@ -8,13 +8,14 @@ import Dashboard from './routes/Dashboard.jsx';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedInEmail, setLoggedInEmail] = useState("");
 
   return (
     <Routes>
       <Route element={<Home loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} path="/" />
-      <Route element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} path="/login" />
-      <Route element={<Register loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} path="/register" />
-      <Route element={<Dashboard loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} path="/dashboard" />
+      <Route element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} setLoggedInEmail={setLoggedInEmail}/>} path="/login" />
+      <Route element={<Register loggedIn={loggedIn} setLoggedIn={setLoggedIn} setLoggedInEmail={setLoggedInEmail}/>} path="/register" />
+      <Route element={<Dashboard loggedIn={loggedIn} setLoggedIn={setLoggedIn} loggedInEmail={loggedInEmail}/>} path="/dashboard" />
     </Routes>
   )
 }

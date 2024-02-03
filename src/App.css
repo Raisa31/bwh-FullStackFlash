@@ -54,3 +54,7 @@ nav {
 nav button {
   font-size: 1em;
 }
+
+.errorMessage {
+  color: red;
+}

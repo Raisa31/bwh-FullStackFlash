@@ -1,13 +1,44 @@
+import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import axios from "axios";
 import Layout from '../components/Layout.jsx';
 
-const Login = ({ loggedIn, setLoggedIn }) => {
+const Login = ({ loggedIn, setLoggedIn, setLoggedInEmail}) => {
   const navigate = useNavigate();
   
-  const handleLogin = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const getData = async () => {
+      await axios.get(`/app/login/${email}/${password}`)
+      .then((response) => {
+        console.log(response)
+        const res =response.data
+        if (response.status === 200) {
+          setLoggedInEmail(email)
+          navigate("/dashboard")
+        } else {
+          setMessage("Invalid credentials")
+        }
+        })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+          setMessage(error.response.data.error);
+          }
+      })}
+
+    getData();
+
     setLoggedIn(true);
-    navigate("/dashboard");
+    ;
   }
+
 
   return (
     <main className="Login">
@@ -15,12 +46,23 @@ const Login = ({ loggedIn, setLoggedIn }) => {
       </Layout>
       
       <h2>Login</h2>
-      <form>
-        <label htmlFor="username">Username: </label>
-        <input type="text" id="username" name="username"></input><br></br>
+      {message ? <p className="errorMessage">{message}</p> : <div></div>}
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="email">Email: </label>
+        <input 
+          type="text" 
+          id="email" 
+          name="email" 
+          onChange={(e) => setEmail(e.target.value)}/>
+          <br></br>
         <label htmlFor="password">Password: </label>
-        <input type="password" id="password" name="password"></input><br></br><br></br>
-          <button type="submit" onClick={handleLogin}>Login</button>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          onChange={(e) => setPassword(e.target.value)}/>
+          <br></br><br></br>
+          <button type="submit">Login</button>
       </form>
     </main>
   )
