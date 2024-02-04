@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify, g
 from app.db import get_db, close_db
 import base64, requests
+import uuid
+from datetime import datetime, timezone
 
 def register_teardown_functions(app):
     @app.before_request
@@ -241,6 +243,112 @@ def register_routes(app):
             return jsonify({'message': 'Hobby deleted successfully'}), 200
         except Exception as e:
             db.rollback()
+            return jsonify({'error': str(e)}), 500
+        finally:
+            cursor.close()
+
+    @app.route('/messages/createConversation', methods=['POST'])
+    def create_conversation():
+        data = request.form
+        userOne = data.get('userOne')
+        userTwo = data.get('userTwo')
+        if not userOne or not userTwo:
+            return jsonify({'error': 'Both users are required'}), 400
+        conversation_id = uuid.uuid4()
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute("""
+            SELECT conversation_id FROM conversations 
+            WHERE 
+            (participant_one_email = %s AND participant_two_email = %s) 
+            OR 
+            (participant_one_email = %s AND participant_two_email = %s)
+        """, (userOne, userTwo, userTwo, userOne))
+        if cursor.fetchone():
+            # A conversation already exists, so don't insert a new one.
+            return jsonify({'error': 'Conversation already exists'}), 409
+
+        conversation_id = uuid.uuid4()
+        try:
+            cursor.execute("INSERT INTO conversations (conversation_id, participant_one_email, participant_two_email, readStatus) VALUES (%s, %s, %s, %s)", (str(conversation_id), userOne, userTwo, True))
+            db.commit()
+            return jsonify({'message': 'Conversation created successfully'}), 201
+        except Exception as e:
+            db.rollback()
+            return jsonify({'message': 'Failed to create conversation', 'error': str(e)}), 500
+        finally:
+            cursor.close()
+    
+    @app.route('/messages/sendMessage', methods=['POST'])
+    def send_message():
+        data = request.form
+        sender = data.get('sender')
+        receiver = data.get('receiver')
+        message = data.get('message')
+        current_utc_time = datetime.now(timezone.utc)
+
+        if not sender or not receiver:
+            return jsonify({'error': 'Both users are required'}), 400
+        
+        db = get_db()
+        cursor = db.cursor()
+        try:
+            cursor.execute("""
+                SELECT conversation_id FROM conversations 
+                WHERE 
+                (participant_one_email = %s AND participant_two_email = %s) 
+                OR 
+                (participant_one_email = %s AND participant_two_email = %s)
+                """, (sender, receiver, receiver, sender))
+            conversationId = cursor.fetchone()
+            
+            cursor.execute("INSERT INTO messages (conversationId, sender, message, timeSent) VALUES (%s, %s, %s, %s)", (str(conversationId[0]), sender, message, current_utc_time))
+            db.commit()
+
+            cursor.execute("UPDATE conversations SET readStatus = %s WHERE conversation_id = %s", (False, str(conversationId[0])))
+            db.commit()
+            return jsonify({'message': 'Message sent successfully'}), 201
+        except Exception as e:
+            db.rollback()
+            return jsonify({'message': 'Failed to send message', 'error': str(e)}), 500
+        finally:
+            cursor.close()
+    
+    @app.route('/messages/getNMessages/<userOne>/<userTwo>/<number>', methods=['GET'])
+    def get_n_messages(userOne, userTwo, number):
+        db = get_db()
+        cursor = db.cursor()
+
+        cursor.execute("""
+            SELECT conversation_id FROM conversations 
+            WHERE 
+            (participant_one_email = %s AND participant_two_email = %s) 
+            OR 
+            (participant_one_email = %s AND participant_two_email = %s)
+        """, (userOne, userTwo, userTwo, userOne))
+        
+        result = cursor.fetchone()
+        if result:
+            conversation_id = result[0]
+        else:
+            return "Conversation not found."
+
+        try:
+            cursor.execute("""
+                SELECT sender, message, timeSent FROM messages 
+                WHERE conversationId = %s
+                ORDER BY timeSent DESC
+                LIMIT %s
+            """, (conversation_id, number))
+            
+            messages = cursor.fetchall()
+            
+            # Formatting the result for display
+            formatted_messages = [{"message": msg[0], "timeSent": msg[1]} for msg in messages]
+            
+            return jsonify(formatted_messages), 200
+
+        except Exception as e:
             return jsonify({'error': str(e)}), 500
         finally:
             cursor.close()
