@@ -57,7 +57,7 @@ const Register = ({ loggedIn, setLoggedIn, loggedInEmail, setLoggedInEmail }) =>
           id="email" 
           name="email" 
           onChange={(e) => setEmail(e.target.value)}/>
-          <br></br>
+          <br></br><br></br>
         <label htmlFor="password">Password: </label>
         <input 
           type="password" 
