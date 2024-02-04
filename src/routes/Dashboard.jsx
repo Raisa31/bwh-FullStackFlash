@@ -1,4 +1,5 @@
 import Layout from '../components/Layout.jsx';
+import MessageUser from '../components/MessageUser.jsx';
 
 const Dashboard = ({ loggedInEmail, setLoggedInEmail }) => {
   return(
@@ -8,6 +9,8 @@ const Dashboard = ({ loggedInEmail, setLoggedInEmail }) => {
 
       <h2>Dashboard</h2>
       <p>Hello, {loggedInEmail}</p>
+      <MessageUser loggedInEmail={loggedInEmail} />
+      
     </main>
   )
 }

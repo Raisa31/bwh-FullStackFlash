@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Layout from '../components/Layout.jsx';
 
-const Login = ({ loggedIn, setLoggedIn, loggedInEmail, setLoggedInEmail}) => {
+const Login = ({ loggedInEmail, setLoggedInEmail}) => {
   const navigate = useNavigate();
   
   const [email, setEmail] = useState("");
@@ -34,15 +34,13 @@ const Login = ({ loggedIn, setLoggedIn, loggedInEmail, setLoggedInEmail}) => {
       })}
 
     getData();
-
-    setLoggedIn(true);
     ;
   }
 
 
   return (
     <main className="Login">
-      <Layout loggedIn={loggedIn} loggedInEmail={loggedInEmail} setLoggedInEmail={setLoggedInEmail}>
+      <Layout loggedInEmail={loggedInEmail} setLoggedInEmail={setLoggedInEmail}>
       </Layout>
       
       <h2>Login</h2>

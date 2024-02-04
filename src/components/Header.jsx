@@ -1,4 +1,6 @@
 import { Outlet, Link, useNavigate } from 'react-router-dom';
+import logo from "../images/logo.png";
+import blackcircle from "../images/blackcircle.png";
 
 const Header = ({ loggedIn, loggedInEmail, setLoggedInEmail }) => {
 
@@ -12,11 +14,21 @@ const Header = ({ loggedIn, loggedInEmail, setLoggedInEmail }) => {
   return (
     <div className="Header">
       <header>
-        <h1>Title</h1>
+        <div className="titleWrapper">
+          <img src={logo} className="logoImg"/>
+          <h1>SkillSages</h1>
+        </div>
+        <div className="blackCircleWrapper">
+          <img src={blackcircle} className="blackcircle" />
+        </div>
+        
         {loggedInEmail ? 
           <nav>
             <Link to="/">
               <button>HOME</button>
+            </Link>
+            <Link to="/messages">
+              <button>MESSAGES</button>
             </Link>
             <Link to="/profile">
               <button>PROFILE</button>
@@ -27,13 +39,13 @@ const Header = ({ loggedIn, loggedInEmail, setLoggedInEmail }) => {
           
           <nav>
             <Link to="/">
-              <button>HOME</button>
+              <button className="homeButton">Home</button>
             </Link>
             <Link to="/login">
-              <button>LOGIN</button>
+              <button className="loginButton">Login</button>
             </Link>
             <Link to="/register">
-              <button>REGISTER</button>
+              <button className="registerButton">Sign Up</button>
             </Link>
           </nav>
         }

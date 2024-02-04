@@ -1,7 +1,8 @@
-const Category = ({title}) => {
+const Category = ({ title, image }) => {
   return (
     <div className="Category">
-      <button>{title}</button>
+      <img src={image} />
+      <h3>{title}</h3>
     </div>
   )
 }

@@ -18,6 +18,8 @@ const CreateProfile = ({ loggedInEmail, setLoggedInEmail }) => {
     formData.append("photo", photo);
     formData.append("bio", bio);
     formData.append("email", loggedInEmail);
+    
+    const formFile = new FormFile();
 
     //TODO: need to fix this post request, error 400, probably the photo part
 
