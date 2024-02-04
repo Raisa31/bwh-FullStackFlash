@@ -4,3 +4,7 @@ dist
 dist-ssr
 *.local
 config.py
+.venv
+venv
+__pycache__
+app/__pycache__
