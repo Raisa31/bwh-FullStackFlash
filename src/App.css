@@ -1,0 +1,145 @@
+:root {
+  background: white;
+  height: 100%;
+  font-family: "Inter", Helvetica;
+}
+
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+main {
+  text-align: center;
+  vertical-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+  width: 100%;
+  height: 100%;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 10px;
+  border-bottom: solid 7px lightgray;
+
+}
+
+.titleWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-self: flex-start;
+  flex-grow: 1;
+}
+
+h1 {
+  font-family: "Inter", Helvetica;
+  font-weight: 500;
+  font-size: 2em;
+  color: black;
+  padding-left: 10px;
+  letter-spacing: 2px;
+  width: fit-content;
+  text-align: left;
+}
+
+.logoImg {
+  width: auto;
+}
+
+.blackCircleWrapper {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blackcircle {
+  width: 40px;
+  height: 40px;
+  align-self: center;
+  justify-self: center;
+}
+
+nav button {
+  margin: 0px 5px 0px 5px;
+  height: 2.5em;
+  width: 8em;
+  box-shadow: 5px 5px 5px lightgray;
+  font-size: 1em;
+}
+
+.homeButton {
+  background-color: #DADADA;
+}
+
+.loginButton {
+  background-color: #FAB3B3;
+}
+
+.registerButton {
+  background-color: #ff9797
+}
+
+.tagline {
+  font-family: "Inter", Helvetica;
+  font-weight: 700;
+  width: 60%;
+  font-size: 40px;
+  
+}
+
+
+nav {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 20px;
+  justify-self: flex-end;
+  align-self: center;
+  flex-grow: 0.45;
+}
+
+.errorMessage {
+  color: red;
+}
+
+.CategoriesList {
+  width: 100%;
+  text-align: left;
+}
+
+.CategoriesList h2 {
+  width: fit-content;
+  margin-left: 7em;
+  margin-bottom: 1.5em;
+  margin-top: none;
+  font-weight: 500;
+  border-bottom: solid 1px black;
+}
+
+.categoriesWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
